@@ -2,6 +2,7 @@ package com.ayding.common.base.domain;
 
 import com.ayding.common.constant.ResultConstants;
 import com.ayding.common.enums.ErrorEnum;
+import com.github.pagehelper.PageInfo;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +25,7 @@ public class Result<T> {
     private String message; // 提示信息
     private T model; // 结果对象
     private List<T> models; // 结果集对象
-    private PageInfo pageInfo; // 分页信息对象
+    private MyPageInfo pageInfo; // 分页信息对象
     private Object extra; // 扩展字段
 
     // 禁止空参构造
@@ -76,15 +77,33 @@ public class Result<T> {
         return result;
     }
 
-    public static <T> Result<T> createWithPaging(String message, List<T> models, PageInfo pagingInfo) {
+    public static <T> Result<T> createWithPaging(String message, List<T> models, MyPageInfo pagingInfo) {
         Result result = createWithModels(message, models == null ? new ArrayList<>(0) : models);
         result.setPageInfo(pagingInfo);
         return result;
     }
 
-    public static <T> Result<T> createWithPaging(List<T> models, PageInfo pagingInfo) {
+    public static <T> Result<T> createWithPaging(List<T> models, MyPageInfo pagingInfo) {
         Result result = createWithModels(models == null ? new ArrayList<>(0) : models);
         result.setPageInfo(pagingInfo);
+        return result;
+    }
+
+    /**
+     * 将PageHelper分页后的list转为分页信息
+     */
+    public static <T> Result<T> createWithPaging(String message, List<T> models) {
+        Result result = createWithModels(message, models == null ? new ArrayList<>(0) : models);
+        result.setPageInfo(restPage(models));
+        return result;
+    }
+
+    /**
+     * 将PageHelper分页后的list转为分页信息
+     */
+    public static <T> Result<T> createWithPaging(List<T> models) {
+        Result result = createWithModels(models == null ? new ArrayList<>(0) : models);
+        result.setPageInfo(restPage(models));
         return result;
     }
 
@@ -101,5 +120,20 @@ public class Result<T> {
 
     public static <T> Result<T> createWithError() {
         return createWithErrorMessage(ErrorEnum.ERROR);
+    }
+
+
+    /**
+     * 将PageHelper分页后的list转为分页信息
+     */
+    public static <T> MyPageInfo restPage(List<T> list) {
+        MyPageInfo myPageInfo = new MyPageInfo();
+        PageInfo<T> pageInfo = new PageInfo<T>(list);
+//        myPageInfo.setTotalPage(pageInfo.getPages());
+        myPageInfo.setPage(pageInfo.getPageNum());
+        myPageInfo.setSize(pageInfo.getPageSize());
+        myPageInfo.setTotal(pageInfo.getTotal());
+//        myPageInfo.setList(pageInfo.getList());
+        return myPageInfo;
     }
 }

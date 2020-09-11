@@ -11,9 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -32,15 +30,10 @@ public class PostsServiceImpl implements PostsService{
 
     @Override
     public Result<PlumemoPosts> getPostsList(PostsVO postsVO) {
-        postsVO = Optional.ofNullable(postsVO).orElse(new PostsVO());
-//        Page page = Optional.of(PageUtil.checkAndInitPage(postsVO)).orElse(PageUtil.initPage());
-
+//        postsVO = Optional.ofNullable(postsVO).orElse(new PostsVO());
         PageHelper.startPage(postsVO.getPage(), postsVO.getSize());
-//        PageHelper.startPage(1, 2);
         PlumemoPostsExample plumemoPostsExample = new PlumemoPostsExample();
         List<PlumemoPosts> plumemoPosts = plumemoPostsMapper.selectByExample(plumemoPostsExample);
-
-
-        return Result.createWithModels(plumemoPosts);
+        return Result.createWithPaging(plumemoPosts);
     }
 }

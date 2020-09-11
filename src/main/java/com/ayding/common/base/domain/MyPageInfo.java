@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class PageInfo {
+public class MyPageInfo {
 
     private long page = Constants.DEFAULT_PAGE_INDEX;
     private long size = Constants.DEFAULT_PAGE_SIZE;

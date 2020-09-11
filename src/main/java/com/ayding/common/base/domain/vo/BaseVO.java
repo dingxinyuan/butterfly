@@ -1,5 +1,6 @@
 package com.ayding.common.base.domain.vo;
 
+import com.ayding.common.constant.Constants;
 import com.ayding.common.validator.Messages;
 import com.ayding.common.validator.annotion.IntegerNotNull;
 import com.ayding.common.validator.annotion.NotNull;
@@ -32,13 +33,13 @@ public class BaseVO<T> {
      * 页数
      */
     @IntegerNotNull(groups = {Page.class},message = Messages.PAGE_NOT_NULL)
-    protected Integer page;
+    protected Integer page = Constants.DEFAULT_PAGE_INDEX;
 
     /**
      * 每页大小
      */
     @IntegerNotNull(groups = {Page.class},message = Messages.SIZE_NOT_NULL)
-    protected Integer size;
+    protected Integer size = Constants.DEFAULT_PAGE_SIZE;
 
     public Long getId() {
         return id;
