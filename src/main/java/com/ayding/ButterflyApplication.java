@@ -1,5 +1,6 @@
 package com.ayding;
 
+import com.ayding.system.init.ConfigApplicationContextInitializer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,7 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ButterflyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ButterflyApplication.class, args);
+		SpringApplication springApplication = new SpringApplication(ButterflyApplication.class);
+		springApplication.addInitializers(new ConfigApplicationContextInitializer());
+		springApplication.run(args);
 	}
 
 }

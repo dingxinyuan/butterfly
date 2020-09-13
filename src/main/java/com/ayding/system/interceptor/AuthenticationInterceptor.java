@@ -20,6 +20,9 @@ import java.util.Enumeration;
 /**
  * @Author:ayding
  * @Date:2018/09/27 12:52
+ * preHandle：在业务处理器处理请求之前被调用。预处理，可以进行编码、安全控制、权限校验等处理；
+ * postHandle：在业务处理器处理请求执行完成后，生成视图之前执行。后处理（调用了Service并返回ModelAndView，但未进行页面渲染），有机会修改ModelAndView （这个博主就基本不怎么用了）；
+ * afterCompletion：在DispatcherServlet完全处理完请求后被调用，可用于清理资源等。返回处理（已经渲染了页面）；
  */
 @Configuration
 @Slf4j
@@ -27,7 +30,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
-
+        log.info("<=========================进入拦截器AuthenticationInterceptor:preHandle=============================>");
         //打印请求参数
         JSONObject parameter =new JSONObject();// 保存参数
         // 请求的参数
@@ -83,12 +86,13 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest httpServletRequest,
                            HttpServletResponse httpServletResponse,
                            Object o, ModelAndView modelAndView) throws Exception {
-
+        log.info("<=========================进入拦截器AuthenticationInterceptor:postHandle=============================>");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest,
                                 HttpServletResponse httpServletResponse,
                                 Object o, Exception e) throws Exception {
+        log.info("<=========================进入拦截器AuthenticationInterceptor:afterCompletion=============================>");
     }
 }
