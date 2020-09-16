@@ -16,7 +16,21 @@ mybatis:
   type-aliases-package: com.ayding.butterfly.*.dao.auto
   config-location: classpath:config/mybatis-config.xml
 
-
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*/auto/*.xml,classpath:/mapper/*/*.xml
+  typeAliasesPackage: com.ayding.butterfly.*.dao
+  global-config:
+    db-config:
+      #数据库大写下划线转换
+      capital-mode: false
+      #删除
+      logic-delete-value: 1
+      #不删除
+      logic-not-delete-value: 0
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    cache-enabled: true
+  config-location: classpath:config/mybatis-config.xml
 
 logging:
   config: classpath:config/spring-logback.xml
